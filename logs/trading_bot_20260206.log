@@ -1,0 +1,161 @@
+2026-02-06 17:01:38 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 17:01:38 - trading_bot - INFO - Binance client initialized successfully
+2026-02-06 19:37:34 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:37:34 - trading_bot - INFO - Binance client initialized successfully
+2026-02-06 19:42:49 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:42:49 - trading_bot - INFO - Testing connectivity to Binance Futures API
+2026-02-06 19:42:51 - trading_bot - ERROR - Connectivity test failed: HTTPSConnectionPool(host='testnet.binancefuture.com', port=443): Max retries exceeded with url: /fapi/v1/ping (Caused by NameResolutionError("HTTPSConnection(host='testnet.binancefuture.com', port=443): Failed to resolve 'testnet.binancefuture.com' ([Errno -3] Temporary failure in name resolution)"))
+2026-02-06 19:49:55 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:49:55 - trading_bot - INFO - Testing connectivity to Binance Futures API
+2026-02-06 19:49:56 - trading_bot - INFO - Successfully connected to Binance Futures API
+2026-02-06 19:49:56 - trading_bot - INFO - Fetching account information
+2026-02-06 19:49:57 - trading_bot - INFO - Successfully fetched account information
+2026-02-06 19:50:45 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:50:45 - trading_bot - INFO - Binance client initialized successfully
+2026-02-06 19:51:00 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:51:00 - trading_bot - INFO - Testing connectivity to Binance Futures API
+2026-02-06 19:51:01 - trading_bot - INFO - Successfully connected to Binance Futures API
+2026-02-06 19:51:01 - trading_bot - INFO - Fetching account information
+2026-02-06 19:51:02 - trading_bot - INFO - Successfully fetched account information
+2026-02-06 19:53:39 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:53:39 - trading_bot - INFO - Fetching account balance
+2026-02-06 19:53:40 - trading_bot - INFO - Found 3 assets with non-zero balance
+2026-02-06 19:56:01 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:56:01 - trading_bot - INFO - Testing connectivity to Binance Futures API
+2026-02-06 19:56:02 - trading_bot - INFO - Successfully connected to Binance Futures API
+2026-02-06 19:56:02 - trading_bot - INFO - Fetching account information
+2026-02-06 19:56:02 - trading_bot - INFO - Successfully fetched account information
+2026-02-06 19:56:12 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:56:12 - trading_bot - INFO - Fetching account balance
+2026-02-06 19:56:12 - trading_bot - INFO - Found 3 assets with non-zero balance
+2026-02-06 19:56:28 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:56:28 - trading_bot - INFO - Placing MARKET order: BUY 0.001 BTCUSDT
+2026-02-06 19:56:29 - trading_bot - ERROR - Binance API error placing MARKET order: 400 - Order's notional must be no smaller than 100 (unless you choose reduce only).
+2026-02-06 19:57:27 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:57:27 - trading_bot - INFO - Fetching ticker price for BTCUSDT
+2026-02-06 19:57:28 - trading_bot - INFO - Current price for BTCUSDT: 66869.70
+2026-02-06 19:58:34 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 19:58:34 - trading_bot - INFO - Placing MARKET order: BUY 0.002 BTCUSDT
+2026-02-06 19:58:35 - trading_bot - INFO - MARKET order placed successfully: OrderID=12139119208, Status=NEW
+2026-02-06 19:58:35 - trading_bot - INFO - Order response: {
+  "orderId": 12139119208,
+  "symbol": "BTCUSDT",
+  "status": "NEW",
+  "clientOrderId": "xN4nUJJsEmzEaTHdIdxZnC",
+  "price": "0.00",
+  "avgPrice": "0.00",
+  "origQty": "0.002",
+  "executedQty": "0.000",
+  "cumQty": "0.000",
+  "cumQuote": "0.00000",
+  "timeInForce": "GTC",
+  "type": "MARKET",
+  "reduceOnly": false,
+  "closePosition": false,
+  "side": "BUY",
+  "positionSide": "BOTH",
+  "stopPrice": "0.00",
+  "workingType": "CONTRACT_PRICE",
+  "priceProtect": false,
+  "origType": "MARKET",
+  "priceMatch": "NONE",
+  "selfTradePreventionMode": "EXPIRE_MAKER",
+  "goodTillDate": 0,
+  "updateTime": 1770388115503
+}
+2026-02-06 20:02:54 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 20:02:54 - trading_bot - INFO - Placing MARKET order: BUY 0.002 BTCUSDT
+2026-02-06 20:02:54 - trading_bot - INFO - MARKET order placed successfully: OrderID=12139143085, Status=NEW
+2026-02-06 20:02:54 - trading_bot - INFO - Order response: {
+  "orderId": 12139143085,
+  "symbol": "BTCUSDT",
+  "status": "NEW",
+  "clientOrderId": "F5ahlaSzmNyYQoCBkciZb2",
+  "price": "0.00",
+  "avgPrice": "0.00",
+  "origQty": "0.002",
+  "executedQty": "0.000",
+  "cumQty": "0.000",
+  "cumQuote": "0.00000",
+  "timeInForce": "GTC",
+  "type": "MARKET",
+  "reduceOnly": false,
+  "closePosition": false,
+  "side": "BUY",
+  "positionSide": "BOTH",
+  "stopPrice": "0.00",
+  "workingType": "CONTRACT_PRICE",
+  "priceProtect": false,
+  "origType": "MARKET",
+  "priceMatch": "NONE",
+  "selfTradePreventionMode": "EXPIRE_MAKER",
+  "goodTillDate": 0,
+  "updateTime": 1770388374729
+}
+2026-02-06 20:03:08 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 20:03:08 - trading_bot - INFO - Fetching account balance
+2026-02-06 20:03:10 - trading_bot - INFO - Found 3 assets with non-zero balance
+2026-02-06 20:03:23 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 20:03:23 - trading_bot - INFO - Placing MARKET order: BUY 0.002 BTCUSDT
+2026-02-06 20:03:23 - trading_bot - INFO - MARKET order placed successfully: OrderID=12139144760, Status=NEW
+2026-02-06 20:03:23 - trading_bot - INFO - Order response: {
+  "orderId": 12139144760,
+  "symbol": "BTCUSDT",
+  "status": "NEW",
+  "clientOrderId": "b2JNpbIY59Axf2j2dWcOkb",
+  "price": "0.00",
+  "avgPrice": "0.00",
+  "origQty": "0.002",
+  "executedQty": "0.000",
+  "cumQty": "0.000",
+  "cumQuote": "0.00000",
+  "timeInForce": "GTC",
+  "type": "MARKET",
+  "reduceOnly": false,
+  "closePosition": false,
+  "side": "BUY",
+  "positionSide": "BOTH",
+  "stopPrice": "0.00",
+  "workingType": "CONTRACT_PRICE",
+  "priceProtect": false,
+  "origType": "MARKET",
+  "priceMatch": "NONE",
+  "selfTradePreventionMode": "EXPIRE_MAKER",
+  "goodTillDate": 0,
+  "updateTime": 1770388403854
+}
+2026-02-06 20:03:30 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 20:03:30 - trading_bot - INFO - Fetching account balance
+2026-02-06 20:03:30 - trading_bot - INFO - Found 3 assets with non-zero balance
+2026-02-06 20:07:36 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 20:07:36 - trading_bot - INFO - Placing MARKET order: BUY 0.002 BTCUSDT
+2026-02-06 20:07:37 - trading_bot - INFO - MARKET order placed successfully: OrderID=12139167696, Status=NEW
+2026-02-06 20:07:37 - trading_bot - INFO - Order response: {
+  "orderId": 12139167696,
+  "symbol": "BTCUSDT",
+  "status": "NEW",
+  "clientOrderId": "OxHJvW3uFZDSYgvasuzOJJ",
+  "price": "0.00",
+  "avgPrice": "0.00",
+  "origQty": "0.002",
+  "executedQty": "0.000",
+  "cumQty": "0.000",
+  "cumQuote": "0.00000",
+  "timeInForce": "GTC",
+  "type": "MARKET",
+  "reduceOnly": false,
+  "closePosition": false,
+  "side": "BUY",
+  "positionSide": "BOTH",
+  "stopPrice": "0.00",
+  "workingType": "CONTRACT_PRICE",
+  "priceProtect": false,
+  "origType": "MARKET",
+  "priceMatch": "NONE",
+  "selfTradePreventionMode": "EXPIRE_MAKER",
+  "goodTillDate": 0,
+  "updateTime": 1770388657726
+}
+2026-02-06 20:07:42 - trading_bot - INFO - Initialized Binance Futures client (testnet=True)
+2026-02-06 20:07:42 - trading_bot - INFO - Fetching account balance
+2026-02-06 20:07:42 - trading_bot - INFO - Found 3 assets with non-zero balance
