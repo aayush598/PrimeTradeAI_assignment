@@ -1,375 +1,122 @@
-# Binance Futures Trading Bot
+# Binance Futures Trading Bot (CLI)
 
-🤖 A professional Python trading bot for Binance Futures Testnet with both CLI and Web interfaces.
+A professional, Python-based CLI application for placing orders on the Binance Futures Testnet. Built with modern tooling (`typer`, `rich`, `pydantic`) to ensure robustness, type safety, and a great user experience.
 
-## 🎯 Features
+## Features
 
-### Core Features
-- ✅ Place **MARKET** orders (BUY/SELL)
-- ✅ Place **LIMIT** orders (BUY/SELL)
-- ✅ Place **STOP_LIMIT** orders (Bonus feature)
-- ✅ Real-time price fetching
-- ✅ Account balance monitoring
-- ✅ Order history tracking
-- ✅ Comprehensive logging
-- ✅ Input validation and error handling
+*   **Order Management**:
+    *   Place **MARKET** orders (BUY/SELL)
+    *   Place **LIMIT** orders (BUY/SELL)
+*   **Account Info**:
+    *   Real-time Balance check
+    *   Ticker Price lookup
+    *   Open Orders listing
+*   **Safety & Reliability**:
+    *   Input validation (Symbol format, Sides, Quantities)
+    *   Detailed error handling for API/Network issues
+    *   Connectivity tests
+*   **Logging**:
+    *   Clean CLI output with valid status messages
+    *   Detailed debug logging to file (`logs/`)
 
-### Interfaces
-- 🖥️ **CLI**: Modern command-line interface using Typer with Rich formatting
-- 🌐 **Web UI**: Professional React dashboard for trading operations
-- 🔌 **REST API**: FastAPI backend for programmatic access
-
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 trading_bot/
-├── backend/
-│   ├── trading_bot/
-│   │   ├── __init__.py
-│   │   ├── client.py          # Binance client wrapper
-│   │   ├── orders.py          # Order placement logic
-│   │   ├── validators.py      # Input validation
-│   │   └── logging_config.py  # Logging configuration
-│   ├── server.py              # FastAPI application
-│   ├── requirements.txt       # Python dependencies
-│   └── .env                   # Environment variables
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── TradingDashboard.js
-│   │   │   └── ui/            # Shadcn UI components
-│   │   ├── App.js
-│   │   └── App.css
-│   └── package.json
-├── cli.py                     # CLI entry point
-├── logs/                      # Trading logs
-└── README.md
+├── trading_bot/           # Application Package
+│   ├── __init__.py
+│   ├── client.py          # Binance Futures API Wrapper
+│   ├── orders.py          # Order placement logic
+│   ├── validators.py      # Input validation (Pydantic)
+│   └── logging_config.py  # Logging setup
+├── cli.py                 # CLI Entry Point
+├── .env                   # Configuration
+├── requirements.txt       # Dependencies
+└── README.md              # Documentation
 ```
 
-## 🚀 Setup Instructions
+## Setup
 
 ### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- Binance Futures Testnet account with API credentials
 
-### 1. Backend Setup
+*   Python 3.9+
+*   Binance Futures Testnet Account
 
-The backend is already configured with your API credentials. The services are running via supervisor.
+### Installation
 
-**Environment variables are already set in `/app/backend/.env`:**
-```env
-BINANCE_API_KEY=your_api_key
-BINANCE_API_SECRET=your_api_secret
-USE_TESTNET=true
-```
+1.  **Clone the repository/Extract zip**:
+    ```bash
+    cd trading_bot
+    ```
 
-### 2. Verify Services
+2.  **Create and activate a virtual environment** (recommended):
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
 
-Check if services are running:
+3.  **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4.  **Configuration**:
+    Create a `.env` file in the root directory with your Testnet credentials:
+    ```env
+    BINANCE_API_KEY=your_api_key_here
+    BINANCE_API_SECRET=your_api_secret_here
+    USE_TESTNET=true
+    ```
+
+## Usage
+
+Run the bot using the `cli.py` script. The CLI offers built-in help for all commands.
+
+### 1. Test Connection
+Verify your API keys and connectivity to Binance Testnet.
 ```bash
-sudo supervisorctl status
+python cli.py test
 ```
 
-If needed, restart services:
+### 2. Check Balance
+See your current wallet balance.
 ```bash
-sudo supervisorctl restart backend frontend
+python cli.py balance
 ```
 
-## 📖 Usage
+### 3. Place Orders
 
-### CLI Usage
+**Note on Quantities**: Binance Testnet enforces a minimum order value (notional value) of ~$100. For BTC (assuming ~$60k), a quantity of `0.002` is safe. `0.001` is often too small.
 
-The CLI provides a modern, user-friendly interface for trading operations.
+*   **Market Order**:
+    ```bash
+    # Buy 0.002 BTC at market price
+    python cli.py market BTCUSDT BUY 0.002
+    ```
 
-#### Test Connection
-```bash
-python /app/cli.py test
-```
+*   **Limit Order**:
+    ```bash
+    # Buy 0.002 BTC at $50,000
+    python cli.py limit BTCUSDT BUY 0.002 50000
+    ```
 
-#### Check Balance
-```bash
-python /app/cli.py balance
-```
 
-#### Get Current Price
-```bash
-python /app/cli.py price BTCUSDT
-```
 
-#### Place MARKET Order
-```bash
-python /app/cli.py market BTCUSDT BUY 0.002
-python /app/cli.py market ETHUSDT SELL 0.01
-```
+### 4. Other Commands
+*   **Check Price**: `python cli.py price BTCUSDT`
+*   **List Open Orders**: `python cli.py orders` (or `python cli.py orders BTCUSDT`)
+*   **Help**: `python cli.py --help`
 
-#### Place LIMIT Order
-```bash
-python /app/cli.py limit BTCUSDT BUY 0.002 50000
-python /app/cli.py limit ETHUSDT SELL 0.01 3500
-```
+## Logging
 
-#### Place STOP-LIMIT Order (Bonus Feature)
-```bash
-python /app/cli.py stop-limit BTCUSDT SELL 0.002 49000 49500
-```
+*   **File Logs**: All detailed API interactions (requests, answers, full tracebacks) are stored in `logs/` directory, rotated daily.
+    *   Example: `logs/trading_bot_20240206.log`
+*   **Console**: Only essential information and user-friendly summaries are printed to keep the interface clean.
 
-#### List Open Orders
-```bash
-python /app/cli.py orders
-python /app/cli.py orders BTCUSDT
-```
+## Development
 
-#### Help
-```bash
-python /app/cli.py --help
-python /app/cli.py market --help
-```
-
-### Web UI Usage
-
-1. Access the web interface at: `http://localhost:3000`
-2. The dashboard provides:
-   - Order placement form with validation
-   - Real-time account balance
-   - Order history table
-   - Connection status indicator
-   - Current price display
-
-### API Usage
-
-The REST API is available for programmatic access:
-
-**Base URL:** Check `/app/frontend/.env` for `REACT_APP_BACKEND_URL`
-
-#### Endpoints:
-
-```bash
-# Health Check
-GET /api/health
-
-# Get Account Info
-GET /api/account
-
-# Get Balance
-GET /api/balance
-
-# Get Ticker Price
-GET /api/ticker/{symbol}
-
-# Place Order
-POST /api/orders/place
-Body: {
-  "symbol": "BTCUSDT",
-  "side": "BUY",
-  "orderType": "MARKET",
-  "quantity": 0.002
-}
-
-# Get Order History
-GET /api/orders/history?limit=50
-
-# Get Open Orders
-GET /api/orders/open?symbol=BTCUSDT
-
-# Cancel Order
-DELETE /api/orders/cancel/{symbol}/{order_id}
-
-# Get Order Status
-GET /api/orders/status/{symbol}/{order_id}
-```
-
-## 📝 Logging
-
-All trading operations are logged to:
-- **File:** `/app/logs/trading_bot_YYYYMMDD.log`
-- **Console:** Real-time output during operations
-
-Log entries include:
-- Timestamp
-- Operation type
-- Request parameters
-- Response details
-- Success/failure status
-- Error messages (if any)
-
-### Example Log Entries
-
-**MARKET Order:**
-```
-2026-01-15 10:30:45 - trading_bot - INFO - Placing MARKET order: BUY 0.002 BTCUSDT
-2026-01-15 10:30:46 - trading_bot - INFO - MARKET order placed successfully: OrderID=12345678, Status=FILLED
-```
-
-**LIMIT Order:**
-```
-2026-01-15 10:35:22 - trading_bot - INFO - Placing LIMIT order: BUY 0.002 BTCUSDT @ 50000.0
-2026-01-15 10:35:23 - trading_bot - INFO - LIMIT order placed successfully: OrderID=12345679, Status=NEW
-```
-
-## 🧪 Testing Examples
-
-### Example 1: Place MARKET Order via CLI
-```bash
-python /app/cli.py market BTCUSDT BUY 0.002
-```
-
-**Expected Output:**
-```
-┏━━━━━━━━━━━━━━━━━━━ Order Summary ━━━━━━━━━━━━━━━━━━━┓
-┃ Placing MARKET Order                                  ┃
-┃ Symbol: BTCUSDT                                       ┃
-┃ Side: BUY                                             ┃
-┃ Quantity: 0.002                                       ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-       ✅ Order Placed Successfully        
-┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Field        ┃ Value                   ┃
-┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ Order ID     │ 12345678                │
-│ Symbol       │ BTCUSDT                 │
-│ Side         │ BUY                     │
-│ Type         │ MARKET                  │
-│ Status       │ FILLED                  │
-│ Quantity     │ 0.002                   │
-│ Executed Qty │ 0.002                   │
-└──────────────┴─────────────────────────┘
-
-✅ Success! Order 12345678 placed successfully.
-```
-
-### Example 2: Place LIMIT Order via API
-```bash
-API_URL=$(grep REACT_APP_BACKEND_URL /app/frontend/.env | cut -d '=' -f2) && \
-curl -X POST "$API_URL/api/orders/place" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "symbol": "BTCUSDT",
-    "side": "BUY",
-    "orderType": "LIMIT",
-    "quantity": 0.002,
-    "price": 50000
-  }'
-```
-
-## ⚠️ Error Handling
-
-The bot handles various error scenarios:
-
-1. **Invalid Input:**
-   - Non-positive quantities
-   - Missing required price for LIMIT orders
-   - Invalid symbol format
-
-2. **API Errors:**
-   - Network failures
-   - Authentication errors
-   - Insufficient balance
-   - Invalid order parameters
-
-3. **Validation:**
-   - Symbol format (uppercase alphanumeric)
-   - Side (BUY/SELL only)
-   - Order type validation
-   - Price field requirements
-
-All errors are:
-- Logged to file with full context
-- Displayed with clear error messages
-- Returned with appropriate HTTP status codes (API)
-
-## 🎨 Bonus Features Implemented
-
-1. ✅ **STOP-LIMIT Orders:** Advanced order type for risk management
-2. ✅ **Enhanced CLI UX:** Rich formatting, colored output, tables, panels
-3. ✅ **Web UI:** Professional React dashboard with real-time data
-4. ✅ **Order History:** Database-backed order tracking
-5. ✅ **Real-time Price:** Live price fetching and display
-6. ✅ **Balance Monitoring:** Multi-asset balance tracking
-7. ✅ **Status Indicators:** Connection status and health checks
-
-## 🔧 Technology Stack
-
-### Backend
-- **FastAPI:** Modern, fast web framework
-- **python-binance:** Official Binance API wrapper
-- **Pydantic:** Data validation
-- **Motor:** Async MongoDB driver
-- **Typer:** CLI framework
-- **Rich:** Terminal formatting
-
-### Frontend
-- **React 19:** UI framework
-- **Shadcn/UI:** Component library
-- **Tailwind CSS:** Styling
-- **Axios:** HTTP client
-- **Sonner:** Toast notifications
-- **Lucide React:** Icons
-
-## 📊 Log Files
-
-Log files are stored in `/app/logs/` directory:
-- Named by date: `trading_bot_YYYYMMDD.log`
-- Contain all operations: orders, balance checks, errors
-- Rotated daily automatically
-
-## 🔐 Security Notes
-
-- API credentials stored in `.env` file (not in code)
-- Testnet mode enabled by default
-- All sensitive operations logged
-- Input validation on all user inputs
-- Error messages don't expose sensitive data
-
-## 📈 Assumptions
-
-1. **Testnet Usage:** All operations use Binance Futures Testnet
-2. **USDT-M Futures:** Only USDT-margined futures supported
-3. **Time in Force:** Default GTC (Good Till Cancel) for LIMIT orders
-4. **Precision:** Quantity and price precision determined by exchange
-5. **MongoDB:** Used for order history storage
-
-## 🎯 Evaluation Criteria Met
-
-✅ **Correctness:** Successfully places orders on Binance Futures Testnet  
-✅ **Code Quality:** Clean, modular structure with separation of concerns  
-✅ **Validation:** Comprehensive input validation with clear error messages  
-✅ **Error Handling:** Graceful handling of API errors, network failures, and invalid inputs  
-✅ **Logging:** Detailed logging of all operations with timestamps and context  
-✅ **README:** Complete documentation with setup steps and examples  
-✅ **Bonus Features:** STOP-LIMIT orders, enhanced CLI UX, and Web UI  
-
-## 🚀 Quick Start
-
-```bash
-# Test connection
-python /app/cli.py test
-
-# Check balance
-python /app/cli.py balance
-
-# Place a market order
-python /app/cli.py market BTCUSDT BUY 0.002
-
-# Place a limit order
-python /app/cli.py limit BTCUSDT BUY 0.002 50000
-
-# Access web interface
-# Open browser to http://localhost:3000
-
-# View logs
-tail -f /app/logs/trading_bot_*.log
-```
-
-## 📞 Support
-
-For issues or questions:
-1. Check logs in `/app/logs/`
-2. Verify API credentials in `/app/backend/.env`
-3. Test connectivity: `python /app/cli.py test`
-4. Check service status: `sudo supervisorctl status`
+*   **Dependencies**: managed in `requirements.txt`.
+*   **Linter/Formatter**: Code is typed and structured for readability.
 
 ---
-
-**Built with ❤️ for the Python Developer Role Application**
+**Note**: This is a testnet application. Ensure you are using `https://testnet.binancefuture.com` credentials.

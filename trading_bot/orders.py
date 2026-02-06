@@ -65,55 +65,7 @@ class OrderManager:
             logger.error(f"Unexpected error placing LIMIT order: {str(e)}")
             raise
     
-    def place_stop_market_order(self, symbol: str, side: str, quantity: float, stop_price: float) -> Dict[str, Any]:
-        """Place a STOP_MARKET order"""
-        try:
-            logger.info(f"Placing STOP_MARKET order: {side} {quantity} {symbol} @ stop {stop_price}")
-            
-            order = self.client.client.futures_create_order(
-                symbol=symbol,
-                side=side,
-                type='STOP_MARKET',
-                quantity=quantity,
-                stopPrice=stop_price
-            )
-            
-            logger.info(f"STOP_MARKET order placed successfully: OrderID={order['orderId']}, Status={order['status']}")
-            logger.info(f"Order response: {json.dumps(order, indent=2)}")
-            
-            return order
-        except BinanceAPIException as e:
-            logger.error(f"Binance API error placing STOP_MARKET order: {e.status_code} - {e.message}")
-            raise Exception(f"API Error: {e.message}")
-        except Exception as e:
-            logger.error(f"Unexpected error placing STOP_MARKET order: {str(e)}")
-            raise
-    
-    def place_stop_limit_order(self, symbol: str, side: str, quantity: float, price: float, stop_price: float, time_in_force: str = 'GTC') -> Dict[str, Any]:
-        """Place a STOP_LIMIT order (Bonus feature)"""
-        try:
-            logger.info(f"Placing STOP_LIMIT order: {side} {quantity} {symbol} @ {price} with stop {stop_price}")
-            
-            order = self.client.client.futures_create_order(
-                symbol=symbol,
-                side=side,
-                type='STOP',
-                timeInForce=time_in_force,
-                quantity=quantity,
-                price=price,
-                stopPrice=stop_price
-            )
-            
-            logger.info(f"STOP_LIMIT order placed successfully: OrderID={order['orderId']}, Status={order['status']}")
-            logger.info(f"Order response: {json.dumps(order, indent=2)}")
-            
-            return order
-        except BinanceAPIException as e:
-            logger.error(f"Binance API error placing STOP_LIMIT order: {e.status_code} - {e.message}")
-            raise Exception(f"API Error: {e.message}")
-        except Exception as e:
-            logger.error(f"Unexpected error placing STOP_LIMIT order: {str(e)}")
-            raise
+
     
     def place_order(self, order_request: OrderRequest) -> Dict[str, Any]:
         """Place an order based on OrderRequest"""
@@ -134,21 +86,6 @@ class OrderManager:
                 side=order_request.side,
                 quantity=order_request.quantity,
                 price=order_request.price
-            )
-        elif order_type == "STOP_MARKET":
-            return self.place_stop_market_order(
-                symbol=order_request.symbol,
-                side=order_request.side,
-                quantity=order_request.quantity,
-                stop_price=order_request.stop_price
-            )
-        elif order_type == "STOP_LIMIT":
-            return self.place_stop_limit_order(
-                symbol=order_request.symbol,
-                side=order_request.side,
-                quantity=order_request.quantity,
-                price=order_request.price,
-                stop_price=order_request.stop_price
             )
         else:
             raise ValueError(f"Unsupported order type: {order_type}")

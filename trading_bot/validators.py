@@ -3,16 +3,15 @@ from pydantic import BaseModel, Field, validator
 import re
 
 OrderSide = Literal["BUY", "SELL"]
-OrderType = Literal["MARKET", "LIMIT", "STOP_MARKET", "STOP_LIMIT"]
+OrderType = Literal["MARKET", "LIMIT"]
 
 class OrderRequest(BaseModel):
     """Validates order request parameters"""
     symbol: str = Field(..., description="Trading pair symbol, e.g., BTCUSDT")
     side: OrderSide = Field(..., description="Order side: BUY or SELL")
-    order_type: OrderType = Field(..., alias="orderType", description="Order type: MARKET, LIMIT, STOP_MARKET, or STOP_LIMIT")
+    order_type: OrderType = Field(..., alias="orderType", description="Order type: MARKET or LIMIT")
     quantity: float = Field(..., gt=0, description="Order quantity, must be positive")
-    price: Optional[float] = Field(None, gt=0, description="Price for LIMIT and STOP_LIMIT orders")
-    stop_price: Optional[float] = Field(None, gt=0, alias="stopPrice", description="Stop price for STOP_MARKET and STOP_LIMIT orders")
+    price: Optional[float] = Field(None, gt=0, description="Price for LIMIT orders")
     
     class Config:
         populate_by_name = True
@@ -34,7 +33,7 @@ class OrderRequest(BaseModel):
     @validator('order_type')
     def validate_order_type(cls, v):
         """Validate order type"""
-        valid_types = ["MARKET", "LIMIT", "STOP_MARKET", "STOP_LIMIT"]
+        valid_types = ["MARKET", "LIMIT"]
         if v not in valid_types:
             raise ValueError(f'Order type must be one of {valid_types}')
         return v
@@ -44,13 +43,5 @@ class OrderRequest(BaseModel):
         if self.order_type == "LIMIT":
             if self.price is None:
                 raise ValueError("Price is required for LIMIT orders")
-        
-        if self.order_type == "STOP_MARKET":
-            if self.stop_price is None:
-                raise ValueError("Stop price is required for STOP_MARKET orders")
-        
-        if self.order_type == "STOP_LIMIT":
-            if self.price is None or self.stop_price is None:
-                raise ValueError("Both price and stop_price are required for STOP_LIMIT orders")
         
         return True

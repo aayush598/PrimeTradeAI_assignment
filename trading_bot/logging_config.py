@@ -4,7 +4,7 @@ from pathlib import Path
 from datetime import datetime
 
 # Create logs directory
-LOGS_DIR = Path(__file__).parent.parent.parent / "logs"
+LOGS_DIR = Path(__file__).parent.parent / "logs"
 LOGS_DIR.mkdir(exist_ok=True)
 
 def setup_logger(name: str = "trading_bot") -> logging.Logger:
